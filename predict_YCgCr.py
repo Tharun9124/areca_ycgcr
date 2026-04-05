@@ -36,5 +36,5 @@ def predict_image_YCgCr(image_path):
         print(e)
 
 if __name__ == "__main__":
-    image_path = r"C:\Users\tarun\Downloads\images (3).jpg" # Replace with the test image path
+    image_path = r"images (3).jpg" # Replace with the test image path
     predict_image_YCgCr(image_path)
