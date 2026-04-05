@@ -31,27 +31,49 @@ model = Sequential([
     Flatten(),
 
     Dense(512, activation='relu'),
-    Dense(1, activation='sigmoid')  # Binary classification: ripe (1) or unripe (0)
+    Dense(1, activation='sigmoid')  # Binary classification
 ])
 
 # Compile the model
 model.compile(optimizer=Adam(), loss='binary_crossentropy', metrics=['accuracy'])
 
 # Train the model
-history = model.fit(X_train, y_train, epochs=50, validation_data=(X_test, y_test), batch_size=32)
+history = model.fit(
+    X_train, y_train,
+    epochs=50,
+    validation_data=(X_test, y_test),
+    batch_size=32
+)
 
 # Save the trained model
 os.makedirs('models', exist_ok=True)
 model.save('models/arecanut_ripeness_model_YCgCr.h5')
 
-# Plot training history
-plt.plot(history.history['accuracy'], label='accuracy')
-plt.plot(history.history['val_accuracy'], label='val_accuracy')
+# =========================
+# Plot Accuracy
+# =========================
+plt.figure(figsize=(12, 5))
+
+plt.subplot(1, 2, 1)
+plt.plot(history.history['accuracy'], label='Training Accuracy')
+plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
 plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
-plt.ylim([0, 1])
-plt.legend(loc='lower right')
-plt.title("Training Accuracy vs Validation Accuracy")
+plt.legend()
+plt.title("Accuracy vs Epochs")
+
+# =========================
+# Plot Loss
+# =========================
+plt.subplot(1, 2, 2)
+plt.plot(history.history['loss'], label='Training Loss')
+plt.plot(history.history['val_loss'], label='Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.legend()
+plt.title("Loss vs Epochs")
+
+plt.tight_layout()
 plt.show()
 
 print("Model trained and saved as 'models/arecanut_ripeness_model_YCgCr.h5'.")
